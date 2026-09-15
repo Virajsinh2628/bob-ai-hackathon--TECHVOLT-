@@ -1,6 +1,5 @@
-# 🚀 [Your Project Title Here]
+# 🚀 WaferPulse: 3nm Fab Yield Root Cause & Batch Risk Analyser
 
-> ⚠️ **Replace everything in `[ ]` brackets with your actual content before submission.**
 
 ---
 
@@ -8,36 +7,35 @@
 
 | Field | Value |
 |---|---|
-| **Team Name** | [Your Team Name] |
-| **Track** | [AI / DevOps / Sustainability / Open] |
-| **Team Lead** | [Name] — [email@ibm.com] |
-| **Members** | [Name 1], [Name 2], [Name 3] |
+| **Team Name** | TECHVOLT |
+| **Track** | AI |
+| **Team Lead** | Manan Pravinbhai Patel — 25ec082@charusat.edu.in |
+| **Members** | Virajsinh Hemantsinh Dabhi, Hiral Harishkumar Shah, Liza Sohilbhai Vhora |
 
 ---
 
 ## 🎯 Problem Statement
 
-> In 2–3 sentences: What problem does your project solve? Who experiences this problem?
+>What problem does your project solve? Who experiences this problem?
 
-[Describe the real-world problem your project addresses. Be specific about who the user is and what pain point they face.]
+At sub-5nm process nodes, a 1% yield drop costs semiconductor foundries tens of millions of dollars per month. Process integration engineers spend weeks manually correlating high-density inline defect inspection images against thousands of equipment sensor parameters across lithography, etch, and CMP chambers. Foundries lack automated tools to isolate root causes probabilistically and flag at-risk upcoming batches before chamber processing.
 
 ---
 
 ## 💡 Solution
 
-> In 2–3 sentences: What did you build? How does it solve the problem above?
+>What did you build? How does it solve the problem above?
 
-[Describe your solution clearly. Explain the core mechanism — what makes it work.]
-
+WaferPulse automates semiconductor fab triage by combining spatial wafer defect pattern classification with Tree-SHAP marginal telemetry attribution, isolating equipment root causes down to standard deviation drift. The engine exposes deterministic diagnostic endpoints to IBM Bob through a local FastMCP server, enabling conversational fab triage, prescriptive maintenance runbooks, and an automated pre-run safety interlock that prevents dispatching at-risk batches.
 ---
 
 ## ✨ Key Features
 
-- **Feature 1:** [Brief description — e.g., "Real-time anomaly detection using watsonx.ai"]
-- **Feature 2:** [Brief description]
-- **Feature 3:** [Brief description]
-- **Feature 4:** [Optional]
-- **Feature 5:** [Optional]
+- **Feature 1:** Spatial Defect Pattern Classification: Classifies wafer die morphologies into canonical fab failure signatures (Edge-Ring, Center, Scratch, Donut, Random).
+- **Feature 2:** Tree-SHAP Root Cause Attribution: Decomposes multivariate chamber sensor telemetry to rank physical equipment anomalies by marginal yield penalty.
+- **Feature 3:** Pre-Dispatch Batch Gatekeeper: Evaluates recipe setpoints for upcoming uncommitted wafer lots and triggers automated safety interlocks to prevent scrap.
+- **Feature 4:** Load-Bearing IBM Bob MCP Integration: FastMCP server running over STDIO transport providing JSON-RPC tools for autonomous agent diagnostic workflows.
+- **Feature 5:** Interactive FabOps Operations UI: Real-time Streamlit dashboard providing engineers with visual wafer map slicing, SHAP charts, and recipe parameter simulators.
 
 ---
 
@@ -45,11 +43,11 @@
 
 | Category | Technologies |
 |---|---|
-| **Languages** | [e.g., Python, TypeScript] |
-| **Frameworks** | [e.g., FastAPI, React] |
-| **IBM Technologies** | [e.g., watsonx.ai, IBM Bob, IBM Cloud] |
-| **Databases** | [e.g., PostgreSQL, Redis] |
-| **Other** | [e.g., Docker, GitHub Actions] |
+| **Languages** | Python 3.10+ |
+| **Frameworks** | Streamlit, FastMCP, Scikit-Learn |
+| **IBM Technologies** | IBM Bob, Model Context Protocol (MCP) |
+| **Databases** | Pandas DataFrame, Structured Fab CSV Telemetry |
+| **Other** | Tree-SHAP, NumPy, Matplotlib, GitHub Actions CI |
 
 ---
 
@@ -73,22 +71,26 @@
 
 ## ⚡ How to Run
 
-> **Copy these exact steps from your [`docs/setup-guide.md`](docs/setup-guide.md)**
-
 ```bash
-# 1. Clone the repo
-git clone https://github.com/[your-repo].git
-cd [your-repo]
+# Clone Repository
+git clone https://github.com/drijesh-ppatel/bob-ai-hackathon--TECHVOLT-.git
 
-# 2. Install dependencies
-[your install command here]
+cd bob-ai-hackathon--TECHVOLT-
 
-# 3. Configure environment
-cp .env.example .env
-# Edit .env with your values
+# Create Virtual Environment
+python -m venv venv
 
-# 4. Run the project
-[your run command here]
+# Activate Virtual Environment (Windows)
+.\venv\Scripts\activate
+
+# Install Dependencies
+pip install fastmcp streamlit pandas numpy scikit-learn shap matplotlib
+
+# Generate Dataset
+python src/data_generator.py
+
+# Launch Dashboard
+streamlit run src/app.py
 ```
 
 ---
@@ -106,16 +108,16 @@ cp .env.example .env
 
 ## ⚠️ Known Limitations
 
-> Be honest — judges appreciate transparency over overclaiming.
 
-- [Limitation 1: e.g., "Authentication is mocked — not production-ready"]
-- [Limitation 2: e.g., "Only tested on Chrome"]
-- [Limitation 3: e.g., "Feature X is scaffolded but not fully implemented"]
+- Telemetry Scope: Currently models a limited set of lithography, etch, and CMP sensor variables, whereas production fabs ingest thousands of telemetry channels.
 
+- Synthetic Calibration: Uses synthetic semiconductor telemetry datasets instead of proprietary foundry production data.
+- Local MCP Deployment: FastMCP server currently runs locally and is not deployed as a distributed production-scale service.
+Show more lines
 ---
 
 ## 🏅 What We're Most Proud Of
 
-[Tell the judges what part of your submission is strongest and worth paying close attention to.]
+We are most proud of integrating semiconductor domain knowledge with IBM Bob MCP workflows. Rather than building a passive analytics dashboard, WaferPulse delivers actionable root-cause diagnostics, batch risk assessment, and conversational fab triage capabilities through IBM Bob integration.
 
 ---

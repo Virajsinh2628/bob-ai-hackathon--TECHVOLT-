@@ -6,74 +6,103 @@
 
 Before you begin, ensure you have the following installed:
 
-- [ ] [e.g., Python 3.11+]
-- [ ] [e.g., Node.js 18+]
-- [ ] [e.g., Docker Desktop]
-- [ ] [e.g., An IBM Cloud account with watsonx.ai access]
+- Python 3.10 or higher
+- Git
+- VS Code
+- IBM Bob Client
+- Internet connection for dependency installation
+
+---
 
 ## Environment Variables
 
-Copy `.env.example` to `.env` and fill in the values:
+Copy `.env.example` to `.env` if custom configuration is required.
 
 ```bash
 cp .env.example .env
 ```
 
 | Variable | Description | Required |
-|---|---|---|
-| `WATSONX_API_KEY` | Your IBM watsonx.ai API key | Yes |
-| `WATSONX_PROJECT_ID` | Your watsonx.ai project ID | Yes |
-| `DATABASE_URL` | PostgreSQL connection string | Yes |
-| `SLACK_WEBHOOK_URL` | Slack webhook for alerts | No |
+|----------|-------------|----------|
+| FAB_TELEMETRY_PATH | Path to telemetry dataset | No |
+| MCP_TRANSPORT | stdio or sse transport | No |
+| LOG_LEVEL | Runtime logging level | No |
+
+---
 
 ## Installation
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/[your-org]/[your-repo].git
-cd [your-repo]
+# Clone the repository
+git clone https://github.com/drijesh-ppatel/bob-ai-hackathon--TECHVOLT-.git
 
-# 2. Install backend dependencies
-[your command — e.g.: pip install -r requirements.txt]
+# Move into project folder
+cd bob-ai-hackathon--TECHVOLT-
 
-# 3. Install frontend dependencies (if applicable)
-[your command — e.g.: cd frontend && npm install]
+# Create virtual environment
+python -m venv venv
 
-# 4. Set up the database (if applicable)
-[your command — e.g.: python manage.py migrate]
+# Activate virtual environment (Windows)
+.\venv\Scripts\activate
+
+# Install dependencies
+pip install fastmcp streamlit pandas numpy scikit-learn shap matplotlib
 ```
+
+---
 
 ## Running the Application
 
-```bash
-# Start the backend
-[your command — e.g.: uvicorn app.main:app --reload]
-
-# Start the frontend (in a separate terminal, if applicable)
-[your command — e.g.: cd frontend && npm run dev]
-```
-
-The application will be available at: `http://localhost:[PORT]`
-
-## Running Tests
+### Generate Fab Dataset
 
 ```bash
-[your test command — e.g.: pytest tests/ -v]
+python src/data_generator.py
 ```
 
-## Quick Demo (Optional)
-
-If you have a demo script or sample data to showcase the project quickly:
+### Launch WaferPulse Dashboard
 
 ```bash
-[e.g.: python demo/seed_demo_data.py]
-[e.g.: open http://localhost:8000/demo]
+streamlit run src/app.py
 ```
+
+Application will be available at:
+
+```text
+http://localhost:8501
+```
+
+### Launch IBM Bob MCP Server
+
+```bash
+python src/mcp_server.py
+```
+
+---
+
+## Running Verification Tests
+
+```bash
+python -c "import sys; sys.path.append('src'); import mcp_server; print('Verification Successful')"
+```
+
+---
+
+## Quick Demo Walkthrough
+
+1. Open `http://localhost:8501`
+2. Select a wafer lot from the dashboard.
+3. Review defect patterns and root-cause rankings.
+4. Inspect upcoming batch risk predictions.
+5. View IBM Bob diagnostic outputs through MCP tools.
+
+---
 
 ## Troubleshooting
 
 | Issue | Solution |
-|---|---|
-| [e.g., `ModuleNotFoundError`] | [e.g., Run `pip install -r requirements.txt` again] |
-| [e.g., Database connection refused] | [e.g., Ensure PostgreSQL is running: `docker compose up db`] |
-| [e.g., watsonx.ai 401 error] | [e.g., Check `WATSONX_API_KEY` in your `.env` file] |
+|---------|----------|
+| ModuleNotFoundError | Run `pip install fastmcp streamlit pandas numpy scikit-learn shap matplotlib` |
+| Virtual environment activation error | Run PowerShell as Administrator and retry |
+| Port 8501 already in use | Use `streamlit run src/app.py --server.port 8502` |
+| MCP server not starting | Verify `src/mcp_server.py` exists |
+| Dataset not found | Run `python src/data_generator.py` first |

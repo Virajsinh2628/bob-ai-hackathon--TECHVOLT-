@@ -2,48 +2,61 @@
 
 ## System Architecture
 
-[Describe the overall architecture of your system. Replace the Mermaid diagram below with your actual architecture.]
+WaferPulse implements a modular architecture that combines semiconductor telemetry analysis, explainable AI, and IBM Bob MCP integration.
 
 ```mermaid
 graph TD
-    A[User / Browser] -->|HTTP| B[Frontend - React]
-    B -->|REST API| C[Backend - FastAPI]
-    C -->|SDK| D[watsonx.ai]
-    C -->|Query| E[PostgreSQL]
-    C -->|Publish| F[Slack Webhook]
-    D -->|Inference Result| C
+
+A[Wafer Telemetry Data] --> B[Data Generator]
+
+B --> C[Machine Learning Engine]
+
+C --> D[Tree-SHAP Attribution Engine]
+
+D --> E[FastMCP Server]
+
+E --> F[IBM Bob]
+
+C --> G[Streamlit Dashboard]
+
+G --> H[Fab Engineer]
+
+F --> H
 ```
 
 ## Components
 
 | Component | Technology | Responsibility |
-|---|---|---|
-| Frontend | [e.g., React 18] | [e.g., Dashboard UI, user interaction] |
-| Backend API | [e.g., FastAPI] | [e.g., Business logic, orchestration] |
-| AI / ML | [e.g., watsonx.ai] | [e.g., Anomaly scoring, classification] |
-| Database | [e.g., PostgreSQL] | [e.g., Storing pipeline events and scores] |
-| Notifications | [e.g., Slack API] | [e.g., Alerting on threshold breaches] |
+|-----------|------------|---------------|
+| FabOps Dashboard | Streamlit | Displays wafer defects, yield metrics, and risk analysis |
+| Data Layer | Pandas, CSV Files | Stores telemetry and wafer inspection data |
+| Diagnostic Engine | Scikit-Learn | Performs root-cause analysis and yield prediction |
+| Explainability Layer | Tree-SHAP | Ranks sensor parameters causing yield loss |
+| MCP Server | FastMCP | Exposes diagnostic tools to IBM Bob |
+| IBM Bob Integration | IBM Bob MCP | Provides conversational diagnostics and workflow automation |
 
 ## Data Flow
 
-[Describe how data moves through your system from input to output.]
-
-1. [e.g., Pipeline logs are ingested via a webhook from GitHub Actions]
-2. [e.g., Logs are preprocessed and chunked into 512-token segments]
-3. [e.g., Each chunk is sent to the watsonx.ai inference endpoint]
-4. [e.g., Anomaly scores are stored in PostgreSQL]
-5. [e.g., The React dashboard polls the API every 30 seconds to refresh]
+1. Wafer telemetry and process sensor data are collected and stored.
+2. The machine learning engine predicts wafer yield and batch risk.
+3. Tree-SHAP calculates feature importance and identifies root causes.
+4. FastMCP exposes diagnostic functions to IBM Bob.
+5. IBM Bob invokes diagnostic tools through MCP.
+6. Results are displayed on the Streamlit dashboard.
+7. Engineers receive recommendations for corrective actions and batch approval.
 
 ## Security Considerations
 
-[Note any security decisions relevant to the architecture — even if basic.]
-
-- [e.g., API keys stored in environment variables, never committed to git]
-- [e.g., All API routes require a Bearer token]
-- [e.g., Database credentials rotated via IBM Secrets Manager]
+- Sensitive configuration values are stored outside source code.
+- No credentials are hardcoded within the repository.
+- MCP tools use structured input validation.
+- Read-only access is used for analytics workflows.
+- Environment variables are used for local configuration.
 
 ## Scalability Notes
 
-[Optional: how would this scale beyond the hackathon prototype?]
-
-[e.g., "The FastAPI backend is stateless and could be horizontally scaled behind a load balancer. The watsonx.ai calls are the bottleneck and would benefit from request batching."]
+- The system can be extended to support live semiconductor telemetry streams.
+- Additional sensor channels can be incorporated without major architectural changes.
+- FastMCP services can be migrated to remote deployments.
+- The diagnostic engine can support larger fab datasets and distributed inference workloads.
+- Future versions can integrate directly with manufacturing execution systems (MES).
