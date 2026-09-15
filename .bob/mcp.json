@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "semiconductor-yield-engine": {
+      "command": "python",
+      "args": ["src/mcp_server.py"],
+      "cwd": ".",
+      "alwaysAllow": [
+        "get_lot_yield_summary",
+        "rank_root_causes",
+        "recommend_corrective_action",
+        "predict_upcoming_batches"
+      ],
+      "disabled": false
+    }
+  }
+}

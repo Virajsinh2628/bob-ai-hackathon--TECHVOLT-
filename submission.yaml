@@ -9,61 +9,58 @@
 # =============================================================================
 
 team:
-  name: ""                             # REQUIRED — e.g., "Orion Squad"
-  track: ""                            # REQUIRED — one of: AI | DevOps | Sustainability | Open
+  name: "TECHVOLT"
+  track: "AI"
   lead:
-    name: ""                           # REQUIRED — e.g., "Alice Chen"
-    email: ""                          # REQUIRED — e.g., "alice.chen@ibm.com"
+    name: "Manan Pravinbhai Patel"
+    email: "25ec082@charusat.edu.in"
   members:
-    - name: ""                         # REQUIRED — Team member 1
-      email: ""
-    - name: ""                         # Add more members by copying the two lines above
-      email: ""
-    - name: ""
-      email: ""
+    - name: "Virajsinh Hemantsinh Dabhi"
+      email: "25ec016@charusat.edu.in"
+    - name: "Hiral Harishkumar Shah"
+      email: "25ee051@charusat.edu.in"
+    - name: "Liza Vohra"
+      email: "25ee065@charusat.edu.in"
 
 submission:
-  title: ""                            # REQUIRED — Project display name, e.g., "SmartOps Dashboard"
+  title: "WaferPulse: 3nm Fab Yield Root Cause & Batch Risk Analyser"
 
-  problem_statement: >                 # REQUIRED — 1-3 sentences. What problem? Who has it?
-    Replace this text with a concise description of the real-world problem
-    your project addresses and who experiences it.
+  problem_statement: >
+    "At sub-5nm process nodes, a 1% wafer yield drop costs chipmakers tens of millions of dollars monthly. Root causes hide across thousands of equipment sensors, and engineers spend weeks manually isolating them while upcoming lots remain at risk of failure."
 
-  solution_summary: >                  # REQUIRED — 1-3 sentences. What did you build?
-    Replace this text with a clear description of your solution
-    and how it addresses the problem above.
+  solution_summary: >
+    "We built an autonomous semiconductor diagnostic system that classifies spatial defect maps, ranks equipment root causes using Tree-SHAP telemetry attribution, and predicts scrap risk for upcoming batches before chamber processing, orchestrated conversationally via an IBM Bob FastMCP server."
 
-  key_features:                        # REQUIRED — List 3 to 5 specific features you implemented
-    - ""                               # e.g., "Real-time pipeline anomaly detection using watsonx.ai"
-    - ""
-    - ""
-    - ""                               # optional 4th
-    - ""                               # optional 5th
+  key_features:
+    - "Automated spatial wafer defect pattern classification mapped to fab process modules"
+    - "Tree-SHAP equipment telemetry attribution ranking root causes by probability and sigma drift"
+    - "Pre-dispatch batch risk predictor preventing processing of at-risk wafer lots"
+    - "Load-bearing IBM Bob Model Context Protocol (MCP) server for conversational fab triage"
+    - "Interactive Streamlit engineering operations dashboard with real-time wafer map visualization"
 
   tech_stack:
-    languages: []                      # REQUIRED — e.g., ["Python", "TypeScript"]
-    frameworks: []                     # e.g., ["FastAPI", "React"]
-    ibm_technologies: []               # e.g., ["watsonx.ai", "IBM Bob", "IBM Cloud Functions"]
-    databases: []                      # e.g., ["PostgreSQL", "Redis"]
-    other: []                          # e.g., ["Docker", "GitHub Actions", "Slack API"]
+    languages: ["Python"]
+    frameworks: ["Streamlit", "FastMCP", "Scikit-Learn"]
+    ibm_technologies: ["IBM Bob", "Model Context Protocol"]
+    databases: ["Pandas DataFrame", "CSV"]
+    other: ["Tree-SHAP", "NumPy", "Matplotlib"]
 
-  what_we_are_most_proud_of: >         # Optional but recommended — guides judges to your best work
-    Replace with what aspect of the submission you consider strongest
-    and want judges to pay special attention to.
+  what_we_are_most_proud_of: >
+    "Grounding our machine learning models in real semiconductor physics (RIE focus ring erosion, CMP pressure spikes, EUV focal tilt) coupled directly to an IBM Bob FastMCP agent for autonomous root cause resolution."
 
-  known_limitations: >                 # Optional but recommended — be honest about gaps
-    Replace with any known limitations, incomplete features,
-    or shortcuts taken due to time constraints.
+  known_limitations: >
+    "Trained on 8 primary lithography, etch, and CMP sensor telemetry variables; full commercial fab deployment would ingest thousands of inline fault detection and classification (FDC) sensor channels."
 
 # =============================================================================
 # ARTIFACT LOCATIONS
 # These paths are relative to the repo root. Only change if you moved files.
 # =============================================================================
+
 artifacts:
   source_code: "src/"
   setup_guide: "docs/setup-guide.md"
   architecture_doc: "docs/architecture.md"
-  demo_video: "demo/demo-video-link.txt"   # URL to hosted video (YouTube, Loom, Box)
-  live_demo: "demo/live-demo-url.txt"      # URL to deployed demo (optional)
+  demo_video: "demo/demo-video-link.txt"
+  live_demo: "demo/live-demo-url.txt"
   screenshots: "demo/screenshots/"
   presentation: "presentation/"
